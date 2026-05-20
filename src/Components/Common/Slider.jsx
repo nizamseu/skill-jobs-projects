@@ -26,7 +26,7 @@ export default function Slider() {
             <SwiperSlide>
               <div className=" bg-gray-300 grid grid-cols-2 items-center h-full ">
                 <div className=" flex flex-col items-center">
-                  <h2 className=" max-w-xl text-5xl font-bold">
+                  <h2 className=" max-w-xl text-center text-5xl font-bold">
                     {item?.title}
                   </h2>
                   <p className=" max-w-md mt-3 text-sm">{item?.description}</p>
