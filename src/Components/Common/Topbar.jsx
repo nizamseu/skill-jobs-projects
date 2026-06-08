@@ -2,6 +2,10 @@ import { LucideHeart, LucideMove, ShoppingBag, User2 } from "lucide-react";
 import React from "react";
 
 export default function Topbar() {
+  const cart = localStorage.getItem("cart");
+  const cardData = JSON.parse(cart) || [];
+
+  console.log("cart", cardData);
   return (
     <div className="  bg-[#828282] p-2 ">
       <div className=" max-w-7xl mx-auto flex justify-between items-center">
@@ -39,7 +43,7 @@ export default function Topbar() {
           {/* cart  */}
           <div className="flex bg-white px-2 py-1 rounded  items-center gap-2">
             <ShoppingBag />
-            <span> cart</span>
+            <span> cart {cardData.length}</span>
           </div>
           {/* wishlist  */}
           <div className=" bg-white px-2 py-1 rounded  ">

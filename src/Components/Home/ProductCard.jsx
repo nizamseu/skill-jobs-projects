@@ -1,7 +1,11 @@
 import React from "react";
 import { Heart, ShoppingCart } from "lucide-react";
-
+import { Link } from "react-router";
 export default function ProductCard({ isFeatured = false, data }) {
+  const handleAddToCart = (item) => {
+    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    localStorage.setItem("cart", JSON.stringify([...existingCart, item]));
+  };
   return (
     <div className=" border border-gray-100 rounded ">
       <div className=" relative">
@@ -23,13 +27,16 @@ export default function ProductCard({ isFeatured = false, data }) {
       </div>
 
       <div className=" border-t border-gray-100 py-2 px-4  flex justify-between items-center">
-        <div>
+        <Link to={`/products/${data?.id}`}>
           <h2 className=" text-lg font-semibold text-green-500">
             {data?.title}
           </h2>
           <p className=" font-bold">${data?.price}</p>
-        </div>
-        <button className=" bg-green-400 text-white p-2 rounded">
+        </Link>
+        <button
+          onClick={() => handleAddToCart(data)}
+          className=" bg-green-400 text-white p-2 rounded"
+        >
           <ShoppingCart />
         </button>
       </div>
