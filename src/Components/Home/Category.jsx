@@ -3,6 +3,7 @@ import CategoryCard from "./CategoryCard";
 import axios from "axios";
 
 export default function Category({ categories }) {
+  console.log("categories", categories);
   return (
     <div className=" max-w-7xl mx-auto">
       <h2 className=" text-2xl  my-5 font-semibold  ">Categories</h2>
