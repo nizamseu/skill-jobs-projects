@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
+import { CartContext } from "../../App";
 export default function ProductCard({ isFeatured = false, data }) {
+  const [cart, setCart] = useContext(CartContext);
+
   const handleAddToCart = (item) => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    localStorage.setItem("cart", JSON.stringify([...existingCart, item]));
+    setCart([...cart, item]);
+
+    // const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    // localStorage.setItem("cart", JSON.stringify([...existingCart, item]));
   };
   return (
     <div className=" border border-gray-100 rounded ">

@@ -5,18 +5,24 @@ import Footer from "./Components/Common/Footer";
 import Topbar from "./Components/Common/Topbar";
 import Test from "./Components/Common/Test";
 import ProductsDetails from "./Components/Products/ProductsDetails";
+import { createContext, useState } from "react";
+
+export const CartContext = createContext();
 
 function App() {
+  const [cart, setCart] = useState([]);
   return (
     <div>
-      <Topbar />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products/:id" element={<ProductsDetails />} />
-        <Route path="/test" element={<Test />} />
-      </Routes>
-      <Footer />
+      <CartContext value={[cart, setCart]}>
+        <Topbar />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products/:id" element={<ProductsDetails />} />
+          <Route path="/test" element={<Test />} />
+        </Routes>
+        <Footer />
+      </CartContext>
     </div>
   );
 }
