@@ -1,10 +1,12 @@
 import { LucideHeart, LucideMove, ShoppingBag, User2 } from "lucide-react";
 import React, { useContext } from "react";
 import { CartContext } from "../../App";
-
+import { Link } from "react-router";
 export default function Topbar() {
   const [cart] = useContext(CartContext);
-
+  console.log("====================================");
+  console.log("cart", cart);
+  console.log("====================================");
   // const cart = localStorage.getItem("cart");
   // const cardData = JSON.parse(cart) || [];
 
@@ -12,10 +14,10 @@ export default function Topbar() {
     <div className=" sticky top-0 z-20  bg-[#828282] p-2 ">
       <div className=" max-w-7xl mx-auto flex justify-between items-center">
         {/* logo and name  */}
-        <div className="flex items-center gap-2  ">
+        <Link to="/" className="flex items-center gap-2  ">
           <img className=" w-10" src="/images/logo.png" alt="" />
           <h3 className=" text-white text-2xl font-bold">Comforty</h3>
-        </div>
+        </Link>
         {/* Search  */}
         <div className=" hidden lg:block">
           <div class="w-full  min-w-[200px] max-w-[400px] mx-auto">
@@ -43,10 +45,13 @@ export default function Topbar() {
         {/* cart, wishlist, profile */}
         <div className="flex gap-2 items-center">
           {/* cart  */}
-          <div className="flex bg-white px-2 py-1 rounded  items-center gap-2">
+          <Link
+            to="/cart"
+            className="flex bg-white px-2 py-1 rounded  items-center gap-2"
+          >
             <ShoppingBag />
             <span> cart {cart?.length > 0 && cart?.length}</span>
-          </div>
+          </Link>
           {/* wishlist  */}
           <div className=" bg-white px-2 py-1 rounded  ">
             <LucideHeart />

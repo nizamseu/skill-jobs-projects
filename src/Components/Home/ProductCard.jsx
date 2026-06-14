@@ -2,14 +2,22 @@ import React, { useContext } from "react";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
 import { CartContext } from "../../App";
+import { toast } from "sonner";
 export default function ProductCard({ isFeatured = false, data }) {
   const [cart, setCart] = useContext(CartContext);
 
   const handleAddToCart = (item) => {
-    setCart([...cart, item]);
-
-    // const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    // localStorage.setItem("cart", JSON.stringify([...existingCart, item]));
+    const restCart = cart.filter((cartItem) => cartItem.id !== item.id);
+    const uniqueCart = cart.find((cartItem) => cartItem.id === item.id);
+    if (uniqueCart) {
+      uniqueCart.quantity = uniqueCart.quantity + 1;
+      setCart([uniqueCart, ...restCart]);
+      toast.success("Product Quantity updated in cart");
+    } else {
+      item.quantity = 1;
+      setCart([...cart, item]);
+      toast.success("Product added to cart");
+    }
   };
   return (
     <div className=" border border-gray-100 rounded ">
