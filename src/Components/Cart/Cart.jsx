@@ -20,6 +20,14 @@ const Cart = () => {
     item.quantity = item.quantity - 1;
     setCart([item, ...restCart]);
   };
+  if (cart.length === 0) {
+    return (
+      <h1 className=" text-3xl font-bold mb-5 text-center mt-10 h-screen">
+        Your Cart is Empty
+      </h1>
+    );
+  }
+
   return (
     <div className=" min-h-screen max-w-7xl mx-auto py-10">
       <h1 className=" text-3xl font-bold mb-5">Your Cart</h1>

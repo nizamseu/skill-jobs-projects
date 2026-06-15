@@ -28,9 +28,9 @@ function Navbar() {
         </Link>
         <Link
           className=" text-gray-600 hover:text-green-400 font-bold"
-          to="/bout"
+          to="/dashboard"
         >
-          About
+          Dashboard
         </Link>
       </nav>
       <div className="flex gap-2">
