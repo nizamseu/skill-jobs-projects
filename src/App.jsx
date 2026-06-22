@@ -13,6 +13,8 @@ import Signin from "./Components/Auth/Signin";
 import Dashboard from "./Components/Dashboard/Dashbaord";
 import Profile from "./Components/Dashboard/Profile";
 import ProtectedRoute from "./Components/Common/ProtectedRoute";
+import AddProduct from "./Components/Product/AddProduct";
+import EditProduct from "./Components/Product/EditProduct";
 
 export const CartContext = createContext();
 export const AuthContext = createContext();
@@ -20,7 +22,6 @@ export const AuthContext = createContext();
 function App() {
   const [cart, setCart] = useState([]);
   const [user, setUser] = useState({});
-
 
   return (
     <div>
@@ -31,22 +32,17 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/edit-product/:id" element={<EditProduct />} />
             <Route path="/products/:id" element={<ProductsDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/test" element={<Test />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/sign-in" element={<Signin />} />
 
-
-            <Route path="/dashboard" element={<ProtectedRoute />} >
+            <Route path="/dashboard" element={<ProtectedRoute />}>
               <Route index element={<Dashboard />} />
-
-
-
             </Route>
-
-
-
           </Routes>
           <Footer />
         </CartContext>

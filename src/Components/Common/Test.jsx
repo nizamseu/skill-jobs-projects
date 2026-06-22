@@ -8,6 +8,8 @@ export default function Test() {
     image: null,
   });
 
+  const [uploadStatus, setUploadStatus] = useState("");
+
   const handleChange = (event) => {
     const { name, value, files, type } = event.target;
     console.log(name, value, files, type);
@@ -18,27 +20,51 @@ export default function Test() {
     }));
   };
 
-  const handleAddData = (event) => {
+  const handleAddData = async (event) => {
     event.preventDefault();
 
-    const payload = new FormData();
-    payload.append("name", formData.name);
-    payload.append("price", formData.price);
-    payload.append("description", formData.description);
+    try {
+      let imageUrl = "";
 
-    if (formData.image) {
-      payload.append("image", formData.image);
+      if (formData.image) {
+        const imagePayload = new FormData();
+        imagePayload.append("image", formData.image);
+
+        const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
+
+        if (!apiKey) {
+          setUploadStatus("Add VITE_IMGBB_API_KEY to upload images.");
+          return;
+        }
+
+        setUploadStatus("Uploading image to imgbb...");
+
+        const imageResponse = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${apiKey}`,
+          imagePayload
+        );
+
+        imageUrl = imageResponse.data?.data?.url || "";
+      }
+
+      const payload = {
+        name: formData.name,
+        price: formData.price,
+        description: formData.description,
+        image: imageUrl,
+      };
+
+      const response = await axios.post(
+        "https://dummyjson.com/products/add",
+        payload
+      );
+
+      console.log(response.data);
+      setUploadStatus("Product added successfully.");
+    } catch (error) {
+      console.error(error);
+      setUploadStatus("Image upload failed.");
     }
-
-    axios
-      .post("https://dummyjson.com/products/add", payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
   };
   return (
     <div className="min-h-screen p-4">
@@ -98,6 +124,10 @@ export default function Test() {
         >
           Add Data
         </button>
+
+        {uploadStatus ? (
+          <p className="mt-3 text-sm text-gray-600">{uploadStatus}</p>
+        ) : null}
       </form>
     </div>
   );
