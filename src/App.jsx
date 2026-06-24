@@ -15,6 +15,7 @@ import Profile from "./Components/Dashboard/Profile";
 import ProtectedRoute from "./Components/Common/ProtectedRoute";
 import AddProduct from "./Components/Product/AddProduct";
 import EditProduct from "./Components/Product/EditProduct";
+import Editor from "./Components/Common/Editor";
 
 export const CartContext = createContext();
 export const AuthContext = createContext();
@@ -39,6 +40,7 @@ function App() {
             <Route path="/test" element={<Test />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/sign-in" element={<Signin />} />
+            <Route path="/editor" element={<Editor />} />
 
             <Route path="/dashboard" element={<ProtectedRoute />}>
               <Route index element={<Dashboard />} />

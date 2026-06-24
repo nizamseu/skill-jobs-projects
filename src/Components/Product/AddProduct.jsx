@@ -1,4 +1,4 @@
-import { useState } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 export default function AddProduct() {
@@ -8,18 +8,41 @@ export default function AddProduct() {
     handleSubmit,
   } = useForm();
 
-  const handleImageChange = () => {};
+  const handleuploadImage = async (item) => {
+    console.log("item", item);
 
-  const submit = (data) => {
-    fetch("https://dummyjson.com/products/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then(console.log)
+    const image = item?.[0] || item;
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const response = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+      formData,
+    );
+
+    return response.data?.data?.url || null;
+  };
+
+  const submit = async (data) => {
+    const imageUrl = data.image ? await handleuploadImage(data.image) : null;
+
+    console.log("image url", imageUrl);
+
+    const productData = {
+      ...data,
+      image: imageUrl,
+    };
+
+    console.log("productData", productData);
+
+    axios
+      .post("https://dummyjson.com/products/add", productData)
+      .then((res) => {
+        console.log("res", res);
+      })
       .catch((err) => {
-        console.error(err);
+        console.log("err", err);
       });
   };
 
@@ -41,10 +64,10 @@ export default function AddProduct() {
             </label>
             <label>
               <input
+                {...register("image")}
                 type="file"
                 accept="image/*"
                 className=""
-                onChange={handleImageChange}
               />
             </label>
           </div>

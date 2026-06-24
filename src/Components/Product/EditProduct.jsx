@@ -41,17 +41,13 @@ export default function EditProduct() {
   };
 
   const submit = (data) => {
-    console.log("data", data);
-
-    fetch(`https://dummyjson.com/products/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then(console.log)
+    axios
+      .patch(`https://dummyjson.com/products/${id}`, data)
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => {
-        console.error(err);
+        console.log("err", err);
       });
   };
 

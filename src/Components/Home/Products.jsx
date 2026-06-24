@@ -25,7 +25,18 @@ export default function Products({ categories }) {
   const handleCategory = (item) => {
     setSelectedCategory(item);
   };
+  const handleDelete = (id) => {
+    console.log("handleDelete", id);
 
+    axios
+      .delete(`https://dummyjson.com/products/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
   console.log(selectedCategory);
   return (
     <div className=" max-w-7xl mx-auto">
@@ -47,7 +58,13 @@ export default function Products({ categories }) {
 
       <div className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products?.map((item) => {
-          return <ProductCard data={item} />;
+          return (
+            <ProductCard
+              isDelete={true}
+              handleDelete={handleDelete}
+              data={item}
+            />
+          );
         })}
       </div>
     </div>

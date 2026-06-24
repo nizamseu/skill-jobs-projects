@@ -3,7 +3,12 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
 import { CartContext } from "../../App";
 import { toast } from "sonner";
-export default function ProductCard({ isFeatured = false, data }) {
+export default function ProductCard({
+  isFeatured = false,
+  data,
+  handleDelete,
+  isDelete = false,
+}) {
   const [cart, setCart] = useContext(CartContext);
 
   const handleAddToCart = (item) => {
@@ -52,6 +57,14 @@ export default function ProductCard({ isFeatured = false, data }) {
         >
           <ShoppingCart />
         </button>
+        {isDelete && (
+          <button
+            onClick={() => handleDelete(data.id)}
+            className=" bg-green-400 text-white p-2 rounded"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
